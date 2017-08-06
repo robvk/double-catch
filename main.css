@@ -1,0 +1,16 @@
+.playing-field-body {
+    margin: 0;
+    padding: 0;
+    background-color: #004c48;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+#playingField {
+    border: solid 2px #c1c1c1;
+    margin: auto;
+    background-color: white;
+}
