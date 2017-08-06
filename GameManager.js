@@ -2,6 +2,7 @@
  Game Manager using the singleton pattern.
  TODO: Singleton not really working as expected... why a class if you have to go global anyway?!
   */
+
 let GAME_MANAGER = null;
 
 function startGame() {
