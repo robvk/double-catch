@@ -7,7 +7,7 @@ let GAME_MANAGER = null;
 function startGame() {
     new KeyInputHandler();
     new GameManager();
-    GAME_MANAGER.start();
+    GameManager.start();
 }
 
 class GameManager {
@@ -23,7 +23,7 @@ class GameManager {
     }
 
     static start() {
-        setInterval(GAME_MANAGER.update, 20);
+        setInterval(GameManager.update, 20);
     }
 
     static update() {
