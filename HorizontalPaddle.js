@@ -2,6 +2,7 @@
  Our Horizontal Paddle class.
 
  draw(ctx) - draws our paddle on the given canvas context
+ update() - update your state, run every game 'frame'
  */
 
 const HORIZONTAL_PADDLE_HEIGHT = yGridBlockSize();
@@ -22,6 +23,7 @@ class HorizontalPaddle {
     moveRight() {
         this._leftTopCorner.x = this._leftTopCorner.x + HORIZONTAL_PADDLE_WIDTH / 12;
     }
+
 
     update() {
         if(KEY_HANDLER.isLeftPressed()) this.moveLeft();

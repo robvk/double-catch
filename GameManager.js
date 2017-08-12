@@ -18,6 +18,7 @@ class GameManager {
             this.verticalPaddle = new VerticalPaddle();
             this.canvas = document.getElementById("playingField");
             this.ctx = this.canvas.getContext("2d");
+            this.flyingObjects = [];
             GAME_MANAGER = this;
         }
 
@@ -26,14 +27,25 @@ class GameManager {
 
     static start() {
         setInterval(GameManager.update, 20);
+        setInterval(GameManager.addNewFlyingObject, 2000);
     }
 
     static update() {
         GAME_MANAGER.horizontalPaddle.update();
         GAME_MANAGER.verticalPaddle.update();
+        GAME_MANAGER.flyingObjects.forEach(function(object) {
+            object.update();
+        });
         GAME_MANAGER.ctx.clearRect(0, 0, windowWidth(), windowHeight());
         GAME_MANAGER.horizontalPaddle.draw(GAME_MANAGER.ctx);
         GAME_MANAGER.verticalPaddle.draw(GAME_MANAGER.ctx);
+        GAME_MANAGER.flyingObjects.forEach(function(object) {
+            object.draw(GAME_MANAGER.ctx);
+        });
+    }
+
+    static addNewFlyingObject() {
+        GAME_MANAGER.flyingObjects.push(new FlyingObject())
     }
 }
 
