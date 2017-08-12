@@ -15,6 +15,7 @@ class GameManager {
     constructor() {
         if(!GAME_MANAGER) {
             this.horizontalPaddle = new HorizontalPaddle();
+            this.verticalPaddle = new VerticalPaddle();
             this.canvas = document.getElementById("playingField");
             this.ctx = this.canvas.getContext("2d");
             GAME_MANAGER = this;
@@ -29,8 +30,10 @@ class GameManager {
 
     static update() {
         GAME_MANAGER.horizontalPaddle.update();
+        GAME_MANAGER.verticalPaddle.update();
         GAME_MANAGER.ctx.clearRect(0, 0, windowWidth(), windowHeight());
         GAME_MANAGER.horizontalPaddle.draw(GAME_MANAGER.ctx);
+        GAME_MANAGER.verticalPaddle.draw(GAME_MANAGER.ctx);
     }
 }
 

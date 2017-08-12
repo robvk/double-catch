@@ -1,5 +1,5 @@
 const HORIZONTAL_BLOCKS = 160;
-const VERTICAL_BLOCKS = 90;
+const VERTICAL_BLOCKS = 120;
 
 function windowWidth() {
     return 1024;

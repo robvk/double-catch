@@ -8,8 +8,8 @@ LEFT = 37;
 RIGHT = 39;
 
 // for second paddle later!
-A = 97;
-Q = 113;
+A = 65;
+Q = 81;
 
 class KeyInputHandler {
     constructor() {
@@ -30,10 +30,12 @@ class KeyInputHandler {
 
     onKeyDown(event) {
         this.pressedKeys[event.keyCode] = true;
+        console.log(event.keyCode);
     }
 
     onKeyUp(event) {
         this.pressedKeys[event.keyCode] = false;
+        console.log(event.keyCode);
     }
 
     isLeftPressed() {
@@ -42,5 +44,13 @@ class KeyInputHandler {
 
     isRightPressed() {
         return this.isDown(RIGHT);
+    }
+
+    isUpPressed() {
+        return this.isDown(Q);
+    }
+
+    isDownPressed() {
+        return this.isDown(A);
     }
 }
