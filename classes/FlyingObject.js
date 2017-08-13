@@ -40,7 +40,6 @@ class FlyingObject {
 
     };
 
-
     update() {
         this._leftTopCorner.x = this._leftTopCorner.x + (this._directionVector.x * this._speed) * xGridBlockSize();
         this._leftTopCorner.y = this._leftTopCorner.y + (this._directionVector.y * this._speed) * yGridBlockSize();

@@ -26,7 +26,8 @@ function updateGameFrame() {
 }
 
 function startGame() {
-    new KeyInputHandler();
+    // make sure the keyHandle
+    keyHandler.getInstance().startListening();
     setInterval(updateGameFrame, 20);
 }
 

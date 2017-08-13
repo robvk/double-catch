@@ -25,8 +25,8 @@ class VerticalPaddle {
     }
 
     update() {
-        if(KEY_HANDLER.isUpPressed()) this.moveUp();
-        if(KEY_HANDLER.isDownPressed()) this.moveDown();
+        if(keyHandler.getInstance().isUpPressed()) this.moveUp();
+        if(keyHandler.getInstance().isDownPressed()) this.moveDown();
     }
 
     draw(ctx) {

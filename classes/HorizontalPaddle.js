@@ -24,10 +24,9 @@ class HorizontalPaddle {
         this._leftTopCorner.x = this._leftTopCorner.x + HORIZONTAL_PADDLE_WIDTH / 12;
     }
 
-
     update() {
-        if(KEY_HANDLER.isLeftPressed()) this.moveLeft();
-        if(KEY_HANDLER.isRightPressed()) this.moveRight();
+        if(keyHandler.getInstance().isLeftPressed()) this.moveLeft();
+        if(keyHandler.getInstance().isRightPressed()) this.moveRight();
     }
 
     draw(ctx) {
