@@ -30,12 +30,10 @@ class KeyInputHandler {
 
     onKeyDown(event) {
         this.pressedKeys[event.keyCode] = true;
-        console.log(event.keyCode);
     }
 
     onKeyUp(event) {
         this.pressedKeys[event.keyCode] = false;
-        console.log(event.keyCode);
     }
 
     isLeftPressed() {

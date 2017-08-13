@@ -1,51 +1,84 @@
 /*
  Game Manager using the singleton pattern.
- TODO: Singleton not really working as expected... why a class if you have to go global anyway?!
+
+ The game manager stores all the game objects and updates/draws them each frame.
   */
 
-let GAME_MANAGER = null;
+let gameManager = (function () {
+    let instance;
+
+    function createInstance() {
+        return new GameManager();
+    }
+
+    return {
+        getInstance: function() {
+            if(!instance) {
+                instance = createInstance();
+            }
+            return instance;
+        }
+    };
+})();
+
+function updateGameFrame() {
+    gameManager.getInstance().update();
+}
 
 function startGame() {
     new KeyInputHandler();
-    new GameManager();
-    GameManager.start();
+    setInterval(updateGameFrame, 20);
 }
 
 class GameManager {
     constructor() {
-        if(!GAME_MANAGER) {
-            this.horizontalPaddle = new HorizontalPaddle();
-            this.verticalPaddle = new VerticalPaddle();
-            this.canvas = document.getElementById("playingField");
-            this.ctx = this.canvas.getContext("2d");
-            this.flyingObjects = [];
-            GAME_MANAGER = this;
-        }
-
-        return GAME_MANAGER;
+        // Game counters
+        this.frameCount = 0;
+        this.catchCount = 0;
+        // Game Objects
+        this.horizontalPaddle = new HorizontalPaddle();
+        this.verticalPaddle = new VerticalPaddle();
+        this.flyingObjects = [];
+        // Canvases
+        this.canvas = document.getElementById("playingField");
+        this.ctx = this.canvas.getContext("2d");
     }
 
-    static start() {
-        setInterval(GameManager.update, 20);
-        setInterval(GameManager.addNewFlyingObject, 2000);
+    drawObjects() {
+        const ctx = this.ctx;
+        ctx.clearRect(0, 0, windowWidth(), windowHeight());
+        this.horizontalPaddle.draw(ctx);
+        this.verticalPaddle.draw(ctx);
+        this.flyingObjects.forEach(function (object) {
+            object.draw(ctx);
+        });
     }
 
-    static update() {
-        GAME_MANAGER.horizontalPaddle.update();
-        GAME_MANAGER.verticalPaddle.update();
-        GAME_MANAGER.flyingObjects.forEach(function(object) {
+    updateObjects() {
+        this.horizontalPaddle.update();
+        this.verticalPaddle.update();
+        this.flyingObjects.forEach(function (object) {
             object.update();
         });
-        GAME_MANAGER.ctx.clearRect(0, 0, windowWidth(), windowHeight());
-        GAME_MANAGER.horizontalPaddle.draw(GAME_MANAGER.ctx);
-        GAME_MANAGER.verticalPaddle.draw(GAME_MANAGER.ctx);
-        GAME_MANAGER.flyingObjects.forEach(function(object) {
-            object.draw(GAME_MANAGER.ctx);
-        });
     }
 
-    static addNewFlyingObject() {
-        GAME_MANAGER.flyingObjects.push(new FlyingObject())
+    updateGame() {
+        // update the frame count
+        this.frameCount++;
+
+        // check if we need to add new objects to catch
+        if (this.frameCount % 100 == 0)
+           this.flyingObjects.push(new FlyingObject())
+
+        // TODO: check collisions to see if any objects are caught or off screen!
+
     }
+
+    update() {
+        this.updateGame();
+        this.updateObjects();
+        this.drawObjects();
+    }
+
 }
 
