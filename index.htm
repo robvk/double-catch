@@ -3,15 +3,36 @@
 <head>
     <meta charset="utf-8" />
     <title>Double catch</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="main.css">
     <script type="text/javascript" src="utility.js"></script>
     <script type="text/javascript" src="classes/KeyInputHandler.js"></script>
+    <script type="text/javascript" src="classes/GameObject.js"></script>
     <script type="text/javascript" src="classes/HorizontalPaddle.js"></script>
     <script type="text/javascript" src="classes/VerticalPaddle.js"></script>
     <script type="text/javascript" src="classes/FlyingObject.js"></script>
     <script type="text/javascript" src="classes/GameManager.js"></script>
 </head>
-<body class="playing-field-body" onload="startGame()">
-    <canvas id="playingField" width="1024" height="768"></canvas>
+<body class="playing-field-body" onload="initialize()">
+    <div class="left sidebar">
+        <div class="game-explanation">
+            <span>Left paddle: q and a</span><br>
+            <span>Bottom paddle: <- and -></span>
+        </div>
+        <div class="start-game-button-container">
+            <input id="startGameButton" type="button" value="Start game!" onclick="startGame();" />
+        </div>
+    </div>
+    <canvas id="playingField"></canvas>
+    <div class="right sidebar">
+        <div class="score-board">
+            <div class="score-board-content score">
+            </div>
+        </div>
+        <div class="score-board">
+            <div class="score-board-content missed">
+            </div>
+        </div>
+    </div>
 </body>
 </html>

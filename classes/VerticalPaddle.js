@@ -5,23 +5,28 @@
  draw(ctx) - draws our paddle on the given canvas context
  */
 
-const VERTICAL_PADDLE_HEIGHT = yGridBlockSize() * 12;
-const VERTICAL_PADDLE_WIDTH = xGridBlockSize();
-
-class VerticalPaddle {
+class VerticalPaddle extends GameObject {
     constructor() {
+        super();
+        this._height = yGridBlockSize() * 12;
+        this._width = xGridBlockSize();
         this._leftTopCorner = {
             x: Math.floor(0),
-            y: Math.floor(VERTICAL_BLOCKS / 2 - VERTICAL_PADDLE_WIDTH / 2),
+            y: Math.floor(verticalBlocks() / 2 - this._width / 2),
+        }
+
+        // Set up our collisionvisitor function
+        this.visitCollision = function(otherObject) {
+            otherObject.visitCollisionWithPaddle(this);
         }
     };
 
     moveUp() {
-        this._leftTopCorner.y = this._leftTopCorner.y - VERTICAL_PADDLE_HEIGHT / 12;
+        this._leftTopCorner.y = this._leftTopCorner.y - this._height / 12;
     }
 
     moveDown() {
-        this._leftTopCorner.y = this._leftTopCorner.y + VERTICAL_PADDLE_HEIGHT / 12;
+        this._leftTopCorner.y = this._leftTopCorner.y + this._height / 12;
     }
 
     update() {
@@ -29,9 +34,7 @@ class VerticalPaddle {
         if(keyHandler.getInstance().isDownPressed()) this.moveDown();
     }
 
-    draw(ctx) {
-        ctx.beginPath();
-        ctx.fillRect(this._leftTopCorner.x, this._leftTopCorner.y, VERTICAL_PADDLE_WIDTH, VERTICAL_PADDLE_HEIGHT);
-        ctx.closePath();
+    visitCollisionWithFlyingObject(flyingObject) {
+        gameManager.getInstance().caughtFlyingObject(flyingObject);
     }
 }

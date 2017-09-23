@@ -5,23 +5,28 @@
  update() - update your state, run every game 'frame'
  */
 
-const HORIZONTAL_PADDLE_HEIGHT = yGridBlockSize();
-const HORIZONTAL_PADDLE_WIDTH = xGridBlockSize() * 12;
-
-class HorizontalPaddle {
+class HorizontalPaddle extends GameObject {
     constructor() {
+        super();
+        this._height = yGridBlockSize();
+        this._width = xGridBlockSize() * 12;
         this._leftTopCorner = {
-            x: Math.floor(HORIZONTAL_BLOCKS / 2 - HORIZONTAL_PADDLE_WIDTH / 2),
-            y: Math.floor(windowHeight() - HORIZONTAL_PADDLE_HEIGHT),
+            x: Math.floor(horizontalBlocks() / 2 - this._width / 2),
+            y: Math.floor(windowHeight() - this._height),
+        }
+
+        // Set up our collisionvisitor function
+        this.visitCollision = function(otherObject) {
+            otherObject.visitCollisionWithPaddle(this);
         }
     };
 
     moveLeft() {
-        this._leftTopCorner.x = this._leftTopCorner.x - HORIZONTAL_PADDLE_WIDTH / 12;
+        this._leftTopCorner.x = this._leftTopCorner.x - this._width / 12;
     }
 
     moveRight() {
-        this._leftTopCorner.x = this._leftTopCorner.x + HORIZONTAL_PADDLE_WIDTH / 12;
+        this._leftTopCorner.x = this._leftTopCorner.x + this._width / 12;
     }
 
     update() {
@@ -29,9 +34,7 @@ class HorizontalPaddle {
         if(keyHandler.getInstance().isRightPressed()) this.moveRight();
     }
 
-    draw(ctx) {
-        ctx.beginPath();
-        ctx.fillRect(this._leftTopCorner.x, this._leftTopCorner.y, HORIZONTAL_PADDLE_WIDTH, HORIZONTAL_PADDLE_HEIGHT);
-        ctx.closePath();
+    visitCollisionWithFlyingObject(flyingObject) {
+        gameManager.getInstance().caughtFlyingObject(flyingObject);
     }
 }

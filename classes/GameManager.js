@@ -26,8 +26,6 @@ function updateGameFrame() {
 }
 
 function startGame() {
-    // make sure the keyHandle
-    keyHandler.getInstance().startListening();
     setInterval(updateGameFrame, 20);
 }
 
@@ -36,6 +34,7 @@ class GameManager {
         // Game counters
         this.frameCount = 0;
         this.catchCount = 0;
+        this.missCount = 0;
         // Game Objects
         this.horizontalPaddle = new HorizontalPaddle();
         this.verticalPaddle = new VerticalPaddle();
@@ -66,13 +65,26 @@ class GameManager {
     updateGame() {
         // update the frame count
         this.frameCount++;
+        var self = this;
 
         // check if we need to add new objects to catch
         if (this.frameCount % 100 == 0)
            this.flyingObjects.push(new FlyingObject())
 
-        // TODO: check collisions to see if any objects are caught or off screen!
+        // check collisions to see if any objects are caught or off screen!
+        this.flyingObjects.forEach(function (object) {
+            if(object.isOutOfArea()) {
+                this.missCount = this.missCount + 1;
+                this.despawnFlyingObject(object);
+            } else {
+                object.checkCollisionWith(self.horizontalPaddle);
+                object.checkCollisionWith(self.verticalPaddle);
+            }
+        }, self)
 
+        // Update scoreboard
+        document.querySelector('.score').innerHTML = this.catchCount;
+        document.querySelector('.missed').innerHTML = this.missCount;
     }
 
     update() {
@@ -81,5 +93,14 @@ class GameManager {
         this.drawObjects();
     }
 
+    despawnFlyingObject(flyingObject) {
+        const idx = this.flyingObjects.findIndex(x => x==flyingObject);
+        this.flyingObjects.splice(idx, 1);
+    }
+
+    caughtFlyingObject(flyingObject) {
+        this.catchCount = this.catchCount + 1;
+        this.despawnFlyingObject(flyingObject);
+    }
 }
 

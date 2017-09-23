@@ -1,3 +1,52 @@
+:root {
+    --sidebar-width: 300px;
+}
+
+body {
+    font-family: Lato;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: bold;
+    color: #c1c1c1;
+}
+
+/* sidebar css */
+.sidebar {
+    width: var(--sidebar-width);
+}
+
+.left {
+    text-align: left;
+    float: left;
+}
+
+.right {
+    float: right;
+    text-align: right;
+}
+
+/* scoreboard css */
+.score-board {
+    height: 50%;
+}
+
+.score-board-content {
+    position: relative;
+    float: left;
+    top: 50%;
+    left: 50%;
+    font-size: 150px;
+    transform: translate(-50%, -50%);
+}
+
+.missed {
+    color: red;
+}
+
+.score {
+    color: green;
+}
+
 .playing-field-body {
     margin: 0;
     padding: 0;
@@ -5,12 +54,8 @@
     display: flex;
     justify-content: center;
     align-content: center;
-    height: 100vh;
-    width: 100vw;
 }
 
 #playingField {
-    border: solid 2px #c1c1c1;
-    margin: auto;
     background-color: white;
 }
